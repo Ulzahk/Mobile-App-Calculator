@@ -1,5 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {GeneralButton} from './components/GeneralButton';
 
 const App = () => {
   return (
@@ -9,34 +10,34 @@ const App = () => {
       </View>
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonsRow}>
-          <Text>C</Text>
-          <Text>+/-</Text>
-          <Text>%</Text>
-          <Text>C</Text>
+          <GeneralButton buttonText="C" />
+          <GeneralButton buttonText="+" />
+          <GeneralButton buttonText="%" />
+          <GeneralButton buttonText="DEL" />
         </View>
         <View style={styles.buttonsRow}>
-          <Text>7</Text>
-          <Text>8</Text>
-          <Text>9</Text>
-          <Text>÷</Text>
+          <GeneralButton buttonText="7" />
+          <GeneralButton buttonText="8" />
+          <GeneralButton buttonText="9" />
+          <GeneralButton buttonText="÷" />
         </View>
         <View style={styles.buttonsRow}>
-          <Text>4</Text>
-          <Text>5</Text>
-          <Text>6</Text>
-          <Text>x</Text>
+          <GeneralButton buttonText="4" />
+          <GeneralButton buttonText="5" />
+          <GeneralButton buttonText="6" />
+          <GeneralButton buttonText="×" />
         </View>
         <View style={styles.buttonsRow}>
-          <Text>1</Text>
-          <Text>2</Text>
-          <Text>3</Text>
-          <Text>-</Text>
+          <GeneralButton buttonText="1" />
+          <GeneralButton buttonText="2" />
+          <GeneralButton buttonText="3" />
+          <GeneralButton buttonText="-" />
         </View>
         <View style={styles.buttonsRow}>
-          <Text>0</Text>
-          <Text>.</Text>
-          <Text>=</Text>
-          <Text>+</Text>
+          <GeneralButton buttonText="0" />
+          <GeneralButton buttonText="." />
+          <GeneralButton buttonText="=" />
+          <GeneralButton buttonText="+" />
         </View>
       </View>
     </SafeAreaView>
@@ -69,9 +70,14 @@ const styles = StyleSheet.create({
   buttonsRow: {
     display: 'flex',
     flexDirection: 'row',
+    // justifyContent: 'space-between',
     width: '100%',
     height: '20%',
-    backgroundColor: 'salmon',
+  },
+  button: {
+    width: '25%',
+    height: '100%',
+    backgroundColor: 'red',
   },
 });
 
