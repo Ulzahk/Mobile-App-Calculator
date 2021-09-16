@@ -5,8 +5,8 @@ import {GeneralButton} from './components/GeneralButton';
 const handlePressButton = ({
   history,
   setHistory,
-  variableToCalculate,
-  setVariableToCalculate,
+  result,
+  setResult,
   variableToOperate,
   setVariableToOperate,
   operation,
@@ -21,40 +21,104 @@ const handlePressButton = ({
   //   delete: deleteAction,
   // };
   if (operation === 'addNumber') {
-    setVariableToOperate(parseFloat(`${variableToOperate}${newValue}`));
+    if (!variableToOperate) {
+      setVariableToOperate(`${newValue}`);
+    }
+    if (variableToOperate) {
+      setVariableToOperate(`${variableToOperate}${newValue}`);
+    }
   }
-  if (operation === 'sum') {
-    setVariableToCalculate(variableToCalculate + variableToOperate);
+  if (operation === 'add') {
+    setHistory([...history, variableToOperate, '+']);
     setVariableToOperate(0);
   }
   if (operation === 'subtract') {
-    setVariableToCalculate(variableToCalculate - variableToOperate);
+    setHistory([...history, variableToOperate, '-']);
     setVariableToOperate(0);
   }
-  if (operation === 'division') {
-    setVariableToCalculate(variableToCalculate / variableToOperate);
+  if (operation === 'divide') {
+    setHistory([...history, variableToOperate, '÷']);
     setVariableToOperate(0);
   }
-  if (operation === 'multiplication') {
-    setVariableToCalculate(variableToCalculate * variableToOperate);
+  if (operation === 'multiply') {
+    setHistory([...history, variableToOperate, '×']);
     setVariableToOperate(0);
   }
   if (operation === 'delete') {
-    setVariableToCalculate(0);
     setVariableToOperate(0);
+  }
+  if (operation === 'cancel') {
+    setResult(0);
+    setVariableToOperate(0);
+    setHistory([]);
+  }
+  if (operation === 'equal') {
+    let controlVariable = 0;
+    const historyData = history;
+    historyData.push(variableToOperate);
+    history.map((record, index) => {
+      // 2 + 2
+      const previousValue = history[index - 1];
+      // console.log('previousValue', parseFloat(previousValue));
+      const nextValue = history[index + 1];
+      if (record === '×') {
+        if (controlVariable > 0) {
+          controlVariable = controlVariable * parseFloat(nextValue);
+        }
+        if (controlVariable === 0) {
+          controlVariable = parseFloat(previousValue) * parseFloat(nextValue);
+        }
+      }
+      if (record === '÷') {
+        if (controlVariable > 0) {
+          controlVariable = controlVariable / parseFloat(nextValue);
+        }
+        if (controlVariable === 0) {
+          controlVariable = parseFloat(previousValue) / parseFloat(nextValue);
+        }
+      }
+      if (record === '+') {
+        if (controlVariable > 0) {
+          controlVariable = controlVariable + parseFloat(nextValue);
+        }
+        if (controlVariable === 0) {
+          controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
+        }
+      }
+      if (record === '+') {
+        if (controlVariable > 0) {
+          controlVariable = controlVariable + parseFloat(nextValue);
+        }
+        if (controlVariable === 0) {
+          controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
+        }
+      }
+      if (record === '-') {
+        if (controlVariable > 0) {
+          controlVariable = controlVariable - parseFloat(nextValue);
+        }
+        if (controlVariable === 0) {
+          controlVariable = parseFloat(previousValue) - parseFloat(nextValue);
+        }
+      }
+      // if (record === '2') {
+      //   controlVariable = controlVariable;
+      // }
+    });
+    setResult(controlVariable);
   }
   // return DICTIONARY[operation];
 };
 
 const App = () => {
-  const [history, setHistory] = useState('');
-  const [variableToCalculate, setVariableToCalculate] = useState(0);
+  const [history, setHistory] = useState([]);
+  const [result, setResult] = useState(0);
   const [variableToOperate, setVariableToOperate] = useState(0);
   const defaultObject = {
     history,
     setHistory,
-    variableToCalculate,
-    setVariableToCalculate,
+    result,
+    setResult,
     variableToOperate,
     setVariableToOperate,
   };
@@ -62,11 +126,26 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.outputContainer}>
         <Text>Input: {variableToOperate}</Text>
-        <Text>Result: {variableToCalculate}</Text>
+        <Text>Result: {result}</Text>
+        <View style={styles.historyContainer}>
+          {history.length > 0
+            ? history.map((record, index) => {
+                return <Text key={index}> {record}</Text>;
+              })
+            : null}
+        </View>
       </View>
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonsRow}>
-          <GeneralButton buttonText="C" />
+          <GeneralButton
+            buttonText="C"
+            onPress={() =>
+              handlePressButton({
+                ...defaultObject,
+                operation: 'cancel',
+              })
+            }
+          />
           <GeneralButton
             buttonText="+/-"
             onPress={() =>
@@ -123,7 +202,7 @@ const App = () => {
             onPress={() =>
               handlePressButton({
                 ...defaultObject,
-                operation: 'division',
+                operation: 'divide',
               })
             }
           />
@@ -164,7 +243,7 @@ const App = () => {
             onPress={() =>
               handlePressButton({
                 ...defaultObject,
-                operation: 'multiplication',
+                operation: 'multiply',
               })
             }
           />
@@ -205,7 +284,7 @@ const App = () => {
             onPress={() =>
               handlePressButton({
                 ...defaultObject,
-                operation: 'substract',
+                operation: 'subtract',
               })
             }
           />
@@ -245,7 +324,7 @@ const App = () => {
             onPress={() =>
               handlePressButton({
                 ...defaultObject,
-                operation: 'sum',
+                operation: 'add',
               })
             }
           />
@@ -266,10 +345,14 @@ const styles = StyleSheet.create({
   },
   outputContainer: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     backgroundColor: '#CCCCCC',
     height: '20%',
     width: '100%',
+  },
+  historyContainer: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   buttonsContainer: {
     display: 'flex',

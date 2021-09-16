@@ -1,5 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {colors} from '../constants';
 // import normalize from 'react-native-normalize';
 
 export const GeneralButton = props => {
@@ -18,8 +19,9 @@ const styles = new StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
+    backgroundColor: colors.white,
+    borderWidth: 3,
+    borderColor: colors.grayButtonsContainer,
+    borderRadius: 10,
   },
 });
