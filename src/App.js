@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {GeneralButton} from './components/GeneralButton';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import GeneralButton from './components/GeneralButton';
+import { colors } from './constants';
+import normalize from './utils/normalize';
 
 const handlePressButton = ({
   history,
@@ -333,7 +335,6 @@ const App = () => {
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -357,14 +358,15 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#BBBBBB',
+    backgroundColor: colors.grayButtonsContainer,
     height: '80%',
     width: '100%',
+    padding: normalize(6),
   },
   buttonsRow: {
     display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     width: '100%',
     height: '20%',
   },

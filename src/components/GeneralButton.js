@@ -1,27 +1,68 @@
-import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {colors} from '../constants';
-// import normalize from 'react-native-normalize';
+import React, { useState, useCallback } from 'react';
+import { TouchableWithoutFeedback, Text, StyleSheet, View } from 'react-native';
+import normalize from '../utils/normalize';
+import LinearGradient from 'react-native-linear-gradient';
+import { colors } from '../constants';
 
-export const GeneralButton = props => {
-  const {buttonText, onPress} = props;
+const { buttonGradienColorOne, buttonGradienColorTwo, grayButtonsContainer } =
+  colors;
+const GeneralButton = props => {
+  const [isDown, setDown] = useState(false);
+  const handlePressIn = useCallback(() => {
+    setDown(true);
+  }, [setDown]);
+  const handlePressOut = useCallback(() => {
+    setDown(false);
+  }, [setDown]);
+  const gradColors = isDown
+    ? [buttonGradienColorOne, buttonGradienColorTwo]
+    : [buttonGradienColorTwo, buttonGradienColorOne];
+  const { buttonText, onPress } = props;
   return (
-    <TouchableOpacity style={styles.buttonWrapper} onPress={onPress}>
-      <Text>{buttonText}</Text>
-    </TouchableOpacity>
+    <TouchableWithoutFeedback
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={onPress}>
+      <View style={styles.buttonOuter}>
+        <View style={styles.buttonInner}>
+          <LinearGradient
+            colors={gradColors}
+            useAngle={true}
+            angle={145}
+            angleCenter={{ x: 0.5, y: 0.5 }}
+            style={styles.buttonFace}>
+            <Text style={styles.buttonText}>{buttonText}</Text>
+          </LinearGradient>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = new StyleSheet.create({
-  buttonWrapper: {
-    width: '25%',
-    height: '100%',
+  buttonOutter: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.white,
-    borderWidth: 3,
-    borderColor: colors.grayButtonsContainer,
-    borderRadius: 10,
+    borderRadius: normalize(10),
+  },
+  buttonInner: {
+    backgroundColor: grayButtonsContainer,
+    borderRadius: normalize(10),
+  },
+  buttonFace: {
+    height: normalize(80),
+    width: normalize(80),
+    borderRadius: normalize(10),
+    padding: normalize(12),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: normalize(32),
   },
 });
+
+export default GeneralButton;

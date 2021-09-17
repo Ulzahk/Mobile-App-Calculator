@@ -1,7 +1,11 @@
 const colors = {
-  gray: '#91A1BD',
   white: '#FFFFFF',
-  grayButtonsContainer: '#BBBBBB',
+  grayButtonsContainer: '#e0e0e0',
+  grayButtons: '#bebebe',
+  buttonOutterShadow: '#bebebe',
+  buttonInnerShadow: '#ffffff',
+  buttonGradienColorOne: '#cacaca',
+  buttonGradienColorTwo: '#f0f0f0',
 };
 
 module.exports = {
