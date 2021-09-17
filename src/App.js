@@ -4,6 +4,148 @@ import GeneralButton from './components/GeneralButton';
 import { colors } from './constants';
 import normalize from './utils/normalize';
 
+const addNumberToVariable = ({
+  variableToOperate,
+  setVariableToOperate,
+  newValue,
+}) => {
+  if (!variableToOperate) {
+    setVariableToOperate(`${newValue}`);
+  }
+  if (variableToOperate) {
+    setVariableToOperate(`${variableToOperate}${newValue}`);
+  }
+};
+const addOperation = ({
+  history,
+  setHistory,
+  variableToOperate,
+  setVariableToOperate,
+}) => {
+  setHistory([...history, variableToOperate, '+']);
+  setVariableToOperate('');
+};
+const subtractOperation = ({
+  history,
+  setHistory,
+  variableToOperate,
+  setVariableToOperate,
+}) => {
+  setHistory([...history, variableToOperate, '-']);
+  setVariableToOperate('');
+};
+const divideOperation = ({
+  history,
+  setHistory,
+  variableToOperate,
+  setVariableToOperate,
+}) => {
+  setHistory([...history, variableToOperate, '÷']);
+  setVariableToOperate('');
+};
+const multiplyOperation = ({
+  history,
+  setHistory,
+  variableToOperate,
+  setVariableToOperate,
+}) => {
+  setHistory([...history, variableToOperate, '×']);
+  setVariableToOperate('');
+};
+const changeSignOperation = ({ variableToOperate, setVariableToOperate }) => {
+  if (variableToOperate === '') {
+    return;
+  }
+  const sign = variableToOperate.charAt(0) === '-' ? '+' : '-';
+  if (
+    variableToOperate.charAt(0) === '-' ||
+    variableToOperate.charAt(0) === '+'
+  ) {
+    setVariableToOperate(
+      `${sign}${variableToOperate.slice(1, variableToOperate.length)}`,
+    );
+  }
+  if (
+    variableToOperate.charAt(0) !== '-' &&
+    variableToOperate.charAt(0) !== '+'
+  ) {
+    setVariableToOperate(`${sign}${variableToOperate}`);
+  }
+};
+const percentageOperation = ({
+  history,
+  variableToOperate,
+  setVariableToOperate,
+  equalOperation,
+  setResult,
+}) => {
+  if (variableToOperate === '') {
+    return;
+  }
+  const defaultPercentage = (parseFloat(variableToOperate) / 100).toFixed(2);
+  setVariableToOperate(defaultPercentage);
+  equalOperation({
+    history,
+    variableToOperate: defaultPercentage,
+    setResult,
+  });
+};
+const cancelOperation = ({ setResult, setVariableToOperate, setHistory }) => {
+  setResult(0);
+  setVariableToOperate('');
+  setHistory([]);
+};
+const equalOperation = ({ history, variableToOperate, setResult }) => {
+  let controlVariable = 0;
+  const historyData = history;
+  historyData.push(variableToOperate);
+  history.map((record, index) => {
+    const previousValue = history[index - 1];
+    const nextValue = history[index + 1];
+    if (record === '×') {
+      if (controlVariable > 0) {
+        controlVariable = controlVariable * parseFloat(nextValue);
+      }
+      if (controlVariable === 0) {
+        controlVariable = parseFloat(previousValue) * parseFloat(nextValue);
+      }
+    }
+    if (record === '÷') {
+      if (controlVariable > 0) {
+        controlVariable = controlVariable / parseFloat(nextValue);
+      }
+      if (controlVariable === 0) {
+        controlVariable = parseFloat(previousValue) / parseFloat(nextValue);
+      }
+    }
+    if (record === '+') {
+      if (controlVariable > 0) {
+        controlVariable = controlVariable + parseFloat(nextValue);
+      }
+      if (controlVariable === 0) {
+        controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
+      }
+    }
+    if (record === '+') {
+      if (controlVariable > 0) {
+        controlVariable = controlVariable + parseFloat(nextValue);
+      }
+      if (controlVariable === 0) {
+        controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
+      }
+    }
+    if (record === '-') {
+      if (controlVariable > 0) {
+        controlVariable = controlVariable - parseFloat(nextValue);
+      }
+      if (controlVariable === 0) {
+        controlVariable = parseFloat(previousValue) - parseFloat(nextValue);
+      }
+    }
+  });
+  setResult(controlVariable);
+};
+
 const handlePressButton = ({
   history,
   setHistory,
@@ -23,91 +165,77 @@ const handlePressButton = ({
   //   delete: deleteAction,
   // };
   if (operation === 'addNumber') {
-    if (!variableToOperate) {
-      setVariableToOperate(`${newValue}`);
-    }
-    if (variableToOperate) {
-      setVariableToOperate(`${variableToOperate}${newValue}`);
-    }
+    addNumberToVariable({
+      variableToOperate,
+      setVariableToOperate,
+      newValue,
+    });
   }
   if (operation === 'add') {
-    setHistory([...history, variableToOperate, '+']);
-    setVariableToOperate(0);
+    addOperation({
+      history,
+      setHistory,
+      variableToOperate,
+      setVariableToOperate,
+    });
+  }
+  if (operation === 'changeSign') {
+    changeSignOperation({
+      variableToOperate,
+      setVariableToOperate,
+    });
+  }
+  if (operation === 'percentage') {
+    percentageOperation({
+      history,
+      variableToOperate,
+      setVariableToOperate,
+      equalOperation,
+      setResult,
+    });
   }
   if (operation === 'subtract') {
-    setHistory([...history, variableToOperate, '-']);
-    setVariableToOperate(0);
+    subtractOperation({
+      history,
+      setHistory,
+      variableToOperate,
+      setVariableToOperate,
+    });
   }
   if (operation === 'divide') {
-    setHistory([...history, variableToOperate, '÷']);
-    setVariableToOperate(0);
+    divideOperation({
+      history,
+      setHistory,
+      variableToOperate,
+      setVariableToOperate,
+    });
   }
   if (operation === 'multiply') {
-    setHistory([...history, variableToOperate, '×']);
-    setVariableToOperate(0);
+    multiplyOperation({
+      history,
+      setHistory,
+      variableToOperate,
+      setVariableToOperate,
+    });
   }
   if (operation === 'delete') {
-    setVariableToOperate(0);
+    setVariableToOperate(
+      variableToOperate.slice(0, variableToOperate.length - 1),
+    );
   }
   if (operation === 'cancel') {
-    setResult(0);
-    setVariableToOperate(0);
-    setHistory([]);
+    cancelOperation({
+      setResult,
+      setVariableToOperate,
+      setHistory,
+    });
   }
   if (operation === 'equal') {
-    let controlVariable = 0;
-    const historyData = history;
-    historyData.push(variableToOperate);
-    history.map((record, index) => {
-      // 2 + 2
-      const previousValue = history[index - 1];
-      // console.log('previousValue', parseFloat(previousValue));
-      const nextValue = history[index + 1];
-      if (record === '×') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable * parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) * parseFloat(nextValue);
-        }
-      }
-      if (record === '÷') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable / parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) / parseFloat(nextValue);
-        }
-      }
-      if (record === '+') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable + parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
-        }
-      }
-      if (record === '+') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable + parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
-        }
-      }
-      if (record === '-') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable - parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) - parseFloat(nextValue);
-        }
-      }
-      // if (record === '2') {
-      //   controlVariable = controlVariable;
-      // }
+    equalOperation({
+      history,
+      variableToOperate,
+      setResult,
     });
-    setResult(controlVariable);
   }
   // return DICTIONARY[operation];
 };
@@ -115,7 +243,7 @@ const handlePressButton = ({
 const App = () => {
   const [history, setHistory] = useState([]);
   const [result, setResult] = useState(0);
-  const [variableToOperate, setVariableToOperate] = useState(0);
+  const [variableToOperate, setVariableToOperate] = useState('');
   const defaultObject = {
     history,
     setHistory,
@@ -157,7 +285,15 @@ const App = () => {
               })
             }
           />
-          <GeneralButton buttonText="%" />
+          <GeneralButton
+            buttonText="%"
+            onPress={() =>
+              handlePressButton({
+                ...defaultObject,
+                operation: 'percentage',
+              })
+            }
+          />
           <GeneralButton
             buttonText="DEL"
             onPress={() =>
@@ -350,6 +486,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#CCCCCC',
     height: '20%',
     width: '100%',
+    padding: normalize(6),
   },
   historyContainer: {
     display: 'flex',
