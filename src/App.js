@@ -1,121 +1,35 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
 import GeneralButton from './components/GeneralButton';
-import { colors } from './constants';
+import operationEvaluator from './utils/calculatorFunctions';
 import normalize from './utils/normalize';
+import Keys from './utils/calculatorKeys';
+import { colors } from './constants';
 
 const handlePressButton = ({
   history,
   setHistory,
-  result,
   setResult,
   variableToOperate,
   setVariableToOperate,
   operation,
   newValue,
 }) => {
-  // const DICTIONARY = {
-  //   addNumber: setVariableToOperate(
-  //     parseFloat(`${variableToOperate}${newValue}`),
-  //   ),
-  //   sum: setVariableToCalculate(variableToCalculate + variableToOperate),
-  //   subtract: setVariableToCalculate(variableToCalculate + variableToOperate),
-  //   delete: deleteAction,
-  // };
-  if (operation === 'addNumber') {
-    if (!variableToOperate) {
-      setVariableToOperate(`${newValue}`);
-    }
-    if (variableToOperate) {
-      setVariableToOperate(`${variableToOperate}${newValue}`);
-    }
-  }
-  if (operation === 'add') {
-    setHistory([...history, variableToOperate, '+']);
-    setVariableToOperate(0);
-  }
-  if (operation === 'subtract') {
-    setHistory([...history, variableToOperate, '-']);
-    setVariableToOperate(0);
-  }
-  if (operation === 'divide') {
-    setHistory([...history, variableToOperate, '÷']);
-    setVariableToOperate(0);
-  }
-  if (operation === 'multiply') {
-    setHistory([...history, variableToOperate, '×']);
-    setVariableToOperate(0);
-  }
-  if (operation === 'delete') {
-    setVariableToOperate(0);
-  }
-  if (operation === 'cancel') {
-    setResult(0);
-    setVariableToOperate(0);
-    setHistory([]);
-  }
-  if (operation === 'equal') {
-    let controlVariable = 0;
-    const historyData = history;
-    historyData.push(variableToOperate);
-    history.map((record, index) => {
-      // 2 + 2
-      const previousValue = history[index - 1];
-      // console.log('previousValue', parseFloat(previousValue));
-      const nextValue = history[index + 1];
-      if (record === '×') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable * parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) * parseFloat(nextValue);
-        }
-      }
-      if (record === '÷') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable / parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) / parseFloat(nextValue);
-        }
-      }
-      if (record === '+') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable + parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
-        }
-      }
-      if (record === '+') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable + parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) + parseFloat(nextValue);
-        }
-      }
-      if (record === '-') {
-        if (controlVariable > 0) {
-          controlVariable = controlVariable - parseFloat(nextValue);
-        }
-        if (controlVariable === 0) {
-          controlVariable = parseFloat(previousValue) - parseFloat(nextValue);
-        }
-      }
-      // if (record === '2') {
-      //   controlVariable = controlVariable;
-      // }
-    });
-    setResult(controlVariable);
-  }
-  // return DICTIONARY[operation];
+  operationEvaluator({
+    history,
+    setHistory,
+    setResult,
+    variableToOperate,
+    setVariableToOperate,
+    operation,
+    newValue,
+  });
 };
 
 const App = () => {
   const [history, setHistory] = useState([]);
   const [result, setResult] = useState(0);
-  const [variableToOperate, setVariableToOperate] = useState(0);
+  const [variableToOperate, setVariableToOperate] = useState('');
   const defaultObject = {
     history,
     setHistory,
@@ -127,210 +41,52 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.outputContainer}>
-        <Text>Input: {variableToOperate}</Text>
-        <Text>Result: {result}</Text>
-        <View style={styles.historyContainer}>
-          {history.length > 0
-            ? history.map((record, index) => {
-                return <Text key={index}> {record}</Text>;
-              })
-            : null}
+        <View style={styles.outputScreen}>
+          <ScrollView
+            style={styles.screenHistory}
+            horizontal={true}
+            contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
+            {history.length > 0
+              ? history.map((record, index) => {
+                  if (record === '') {
+                    return;
+                  }
+                  return (
+                    <Text style={styles.screenHistoryText} key={index}>
+                      {record}
+                    </Text>
+                  );
+                })
+              : null}
+          </ScrollView>
+          <View style={styles.screenInput}>
+            <Text style={styles.screenInputText}>{variableToOperate}</Text>
+          </View>
+          <View style={styles.screenOutput}>
+            <Text style={styles.screenOutputText}>{result}</Text>
+          </View>
         </View>
       </View>
       <View style={styles.buttonsContainer}>
-        <View style={styles.buttonsRow}>
-          <GeneralButton
-            buttonText="C"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'cancel',
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="+/-"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'changeSign',
-              })
-            }
-          />
-          <GeneralButton buttonText="%" />
-          <GeneralButton
-            buttonText="DEL"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'delete',
-              })
-            }
-          />
-        </View>
-        <View style={styles.buttonsRow}>
-          <GeneralButton
-            buttonText="7"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 7,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="8"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 8,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="9"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 9,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="÷"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'divide',
-              })
-            }
-          />
-        </View>
-        <View style={styles.buttonsRow}>
-          <GeneralButton
-            buttonText="4"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 4,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="5"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 5,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="6"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 6,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="×"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'multiply',
-              })
-            }
-          />
-        </View>
-        <View style={styles.buttonsRow}>
-          <GeneralButton
-            buttonText="1"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 1,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="2"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 2,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="3"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 3,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="-"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'subtract',
-              })
-            }
-          />
-        </View>
-        <View style={styles.buttonsRow}>
-          <GeneralButton
-            buttonText="0"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: 0,
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="."
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'addNumber',
-                newValue: '.',
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="="
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'equal',
-              })
-            }
-          />
-          <GeneralButton
-            buttonText="+"
-            onPress={() =>
-              handlePressButton({
-                ...defaultObject,
-                operation: 'add',
-              })
-            }
-          />
-        </View>
+        {Keys.map((keysRow, index) => {
+          return (
+            <View key={`KeysRow-${index}`} style={styles.buttonsRow}>
+              {keysRow.map((record, index) => (
+                <GeneralButton
+                  key={`${index}-${record.keyText}`}
+                  buttonText={record.keyText}
+                  onPress={() =>
+                    handlePressButton({
+                      ...defaultObject,
+                      operation: record.keyOperation,
+                      newValue: record.keyValue ? record.keyValue : '',
+                    })
+                  }
+                />
+              ))}
+            </View>
+          );
+        })}
       </View>
     </SafeAreaView>
   );
@@ -347,9 +103,68 @@ const styles = StyleSheet.create({
   outputContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#CCCCCC',
+    backgroundColor: colors.generalBackgroundColor,
     height: '20%',
     width: '100%',
+    padding: normalize(12),
+  },
+  outputScreen: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.lightBlue,
+    borderRadius: normalize(10),
+  },
+  scrollScreenHistory: {
+    height: '20%',
+    width: '100%',
+  },
+  screenHistory: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: colors.lowOpacity,
+    borderTopLeftRadius: normalize(10),
+    borderTopRightRadius: normalize(10),
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'flex-start',
+    // alignItems: 'center',
+  },
+  screenHistoryText: {
+    width: 'auto',
+    color: colors.screenText,
+    fontSize: normalize(12),
+    paddingLeft: normalize(10),
+  },
+  screenInput: {
+    height: '30%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  screenInputText: {
+    width: 'auto',
+    color: colors.screenText,
+    fontSize: normalize(16),
+    paddingLeft: normalize(10),
+  },
+  screenOutput: {
+    height: '50%',
+    width: '100%',
+    borderBottomLeftRadius: normalize(10),
+    borderBottomRightRadius: normalize(10),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  screenOutputText: {
+    width: 'auto',
+    color: colors.screenText,
+    fontSize: normalize(30),
+    fontWeight: 'bold',
+    paddingRight: normalize(10),
   },
   historyContainer: {
     display: 'flex',
@@ -358,13 +173,14 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: colors.grayButtonsContainer,
+    backgroundColor: colors.generalBackgroundColor,
     height: '80%',
     width: '100%',
     padding: normalize(6),
   },
   buttonsRow: {
     display: 'flex',
+    flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',

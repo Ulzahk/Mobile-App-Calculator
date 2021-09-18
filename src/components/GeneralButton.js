@@ -4,7 +4,7 @@ import normalize from '../utils/normalize';
 import LinearGradient from 'react-native-linear-gradient';
 import { colors } from '../constants';
 
-const { buttonGradienColorOne, buttonGradienColorTwo, grayButtonsContainer } =
+const { buttonGradientColorOne, buttonGradientColorTwo, grayButtonsContainer } =
   colors;
 const GeneralButton = props => {
   const [isDown, setDown] = useState(false);
@@ -15,8 +15,8 @@ const GeneralButton = props => {
     setDown(false);
   }, [setDown]);
   const gradColors = isDown
-    ? [buttonGradienColorOne, buttonGradienColorTwo]
-    : [buttonGradienColorTwo, buttonGradienColorOne];
+    ? [buttonGradientColorOne, buttonGradientColorTwo]
+    : [buttonGradientColorTwo, buttonGradientColorOne];
   const { buttonText, onPress } = props;
   return (
     <TouchableWithoutFeedback
@@ -41,6 +41,7 @@ const GeneralButton = props => {
 
 const styles = new StyleSheet.create({
   buttonOutter: {
+    flexBasis: '25%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
