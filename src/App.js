@@ -41,14 +41,27 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.outputContainer}>
-        <Text>Input: {variableToOperate}</Text>
-        <Text>Result: {result}</Text>
-        <View style={styles.historyContainer}>
-          {history.length > 0
-            ? history.map((record, index) => {
-                return <Text key={index}> {record}</Text>;
-              })
-            : null}
+        <View style={styles.outputScreen}>
+          <View style={styles.screenHistory}>
+            {history.length > 0
+              ? history.map((record, index) => {
+                  if (record === '') {
+                    return;
+                  }
+                  return (
+                    <Text style={styles.screenHistoryText} key={index}>
+                      {record}
+                    </Text>
+                  );
+                })
+              : null}
+          </View>
+          <View style={styles.screenInput}>
+            <Text style={styles.screenInputText}>{variableToOperate}</Text>
+          </View>
+          <View style={styles.screenOutput}>
+            <Text style={styles.screenOutputText}>{result}</Text>
+          </View>
         </View>
       </View>
       <View style={styles.buttonsContainer}>
@@ -90,7 +103,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#CCCCCC',
     height: '20%',
     width: '100%',
-    padding: normalize(6),
+    padding: normalize(12),
+  },
+  outputScreen: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.lightBlue,
+    borderRadius: normalize(10),
+  },
+  screenHistory: {
+    height: '20%',
+    width: '100%',
+    backgroundColor: colors.lowOpacity,
+    borderTopLeftRadius: normalize(10),
+    borderTopRightRadius: normalize(10),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  screenHistoryText: {
+    width: 'auto',
+    color: colors.screenText,
+    fontSize: normalize(12),
+    paddingLeft: normalize(10),
+  },
+  screenInput: {
+    height: '30%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  screenInputText: {
+    width: 'auto',
+    color: colors.screenText,
+    fontSize: normalize(16),
+    paddingLeft: normalize(10),
+  },
+  screenOutput: {
+    height: '50%',
+    width: '100%',
+    borderBottomLeftRadius: normalize(10),
+    borderBottomRightRadius: normalize(10),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  screenOutputText: {
+    width: 'auto',
+    color: colors.screenText,
+    fontSize: normalize(30),
+    fontWeight: 'bold',
+    paddingRight: normalize(10),
   },
   historyContainer: {
     display: 'flex',

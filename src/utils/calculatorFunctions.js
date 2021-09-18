@@ -89,7 +89,12 @@ const cancelOperation = ({ setResult, setVariableToOperate, setHistory }) => {
   setVariableToOperate('');
   setHistory([]);
 };
-const equalOperation = ({ history, variableToOperate, setResult }) => {
+const equalOperation = ({
+  history,
+  variableToOperate,
+  setResult,
+  setVariableToOperate,
+}) => {
   let controlVariable = 0;
   const historyData = history;
   historyData.push(variableToOperate);
@@ -130,6 +135,7 @@ const equalOperation = ({ history, variableToOperate, setResult }) => {
     }
   });
   setResult(controlVariable);
+  setVariableToOperate('');
 };
 const operationEvaluator = ({
   history,
@@ -165,6 +171,7 @@ const operationEvaluator = ({
         history,
         variableToOperate,
         setResult,
+        setVariableToOperate,
       }),
     changeSign: () =>
       changeSignOperation({
