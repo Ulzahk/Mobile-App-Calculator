@@ -41,6 +41,7 @@ const GeneralButton = props => {
 
 const styles = new StyleSheet.create({
   buttonOutter: {
+    flexBasis: '25%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
