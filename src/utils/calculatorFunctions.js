@@ -1,50 +1,56 @@
+const operationValidator = ({
+  history,
+  setHistory,
+  variableToOperate,
+  setVariableToOperate,
+  WITH_VALUE,
+  operation,
+}) => {
+  const DICTIONARY = {
+    add: '+',
+    subtract: '-',
+    divide: '÷',
+    multiply: '×',
+  };
+  const operationSign = DICTIONARY[operation];
+  if (history.length > 0) {
+    if (new RegExp(/[+\-÷×]/).test(history[history.length - 1]) === false) {
+      setHistory([...history, variableToOperate, operationSign]);
+      setVariableToOperate('');
+    }
+    if (
+      new RegExp(/[+\-÷×]/).test(history[history.length - 1]) === true &&
+      WITH_VALUE
+    ) {
+      setHistory([...history, variableToOperate, operationSign]);
+      setVariableToOperate('');
+    }
+  }
+  if (history.length === 0) {
+    if (WITH_VALUE) {
+      setHistory([...history, variableToOperate, operationSign]);
+      setVariableToOperate('');
+    }
+  }
+};
 const addNumberToVariable = ({
   variableToOperate,
   setVariableToOperate,
   newValue,
+  history,
+  setHistory,
+  setResult,
 }) => {
   if (!variableToOperate) {
     setVariableToOperate(`${newValue}`);
+    if (new RegExp(/[0-9]+/).test(history[history.length - 1])) {
+      setHistory([]);
+      setResult(0);
+    }
   }
   if (variableToOperate) {
     setVariableToOperate(`${variableToOperate}${newValue}`);
   }
-};
-const addOperation = ({
-  history,
-  setHistory,
-  variableToOperate,
-  setVariableToOperate,
-}) => {
-  setHistory([...history, variableToOperate, '+']);
-  setVariableToOperate('');
-};
-const subtractOperation = ({
-  history,
-  setHistory,
-  variableToOperate,
-  setVariableToOperate,
-}) => {
-  setHistory([...history, variableToOperate, '-']);
-  setVariableToOperate('');
-};
-const divideOperation = ({
-  history,
-  setHistory,
-  variableToOperate,
-  setVariableToOperate,
-}) => {
-  setHistory([...history, variableToOperate, '÷']);
-  setVariableToOperate('');
-};
-const multiplyOperation = ({
-  history,
-  setHistory,
-  variableToOperate,
-  setVariableToOperate,
-}) => {
-  setHistory([...history, variableToOperate, '×']);
-  setVariableToOperate('');
 };
 const changeSignOperation = ({ variableToOperate, setVariableToOperate }) => {
   if (variableToOperate === '') {
@@ -76,12 +82,13 @@ const percentageOperation = ({
   if (variableToOperate === '') {
     return;
   }
-  const defaultPercentage = (parseFloat(variableToOperate) / 100).toFixed(2);
+  const defaultPercentage = (parseFloat(variableToOperate) * 0.01).toFixed(2);
   setVariableToOperate(defaultPercentage);
   equalOperation({
     history,
     variableToOperate: defaultPercentage,
     setResult,
+    setVariableToOperate,
   });
 };
 const cancelOperation = ({ setResult, setVariableToOperate, setHistory }) => {
@@ -96,11 +103,16 @@ const equalOperation = ({
   setVariableToOperate,
 }) => {
   let controlVariable = 0;
-  const historyData = history;
-  historyData.push(variableToOperate);
+  if (variableToOperate !== '') {
+    history.push(variableToOperate);
+  }
   history.map((record, index) => {
     const previousValue = history[index - 1];
     const nextValue = history[index + 1];
+    if (nextValue === undefined) {
+      setVariableToOperate('');
+      return;
+    }
     if (record === '×') {
       if (controlVariable > 0) {
         controlVariable = controlVariable * parseFloat(nextValue);
@@ -146,19 +158,25 @@ const operationEvaluator = ({
   operation,
   newValue,
 }) => {
+  const WITH_VALUE = variableToOperate !== '' && variableToOperate !== '.';
   const DICTIONARY = {
     addNumber: () =>
       addNumberToVariable({
         variableToOperate,
         setVariableToOperate,
         newValue,
+        history,
+        setHistory,
+        setResult,
       }),
     add: () =>
-      addOperation({
+      operationValidator({
         history,
         setHistory,
         variableToOperate,
         setVariableToOperate,
+        WITH_VALUE,
+        operation,
       }),
     cancel: () =>
       cancelOperation({
@@ -178,7 +196,7 @@ const operationEvaluator = ({
         variableToOperate,
         setVariableToOperate,
       }),
-    percentge: () =>
+    percentage: () =>
       percentageOperation({
         history,
         variableToOperate,
@@ -187,26 +205,31 @@ const operationEvaluator = ({
         setResult,
       }),
     subtract: () =>
-      subtractOperation({
+      operationValidator({
         history,
         setHistory,
         variableToOperate,
         setVariableToOperate,
+        WITH_VALUE,
+        operation,
       }),
-    divide: () => {
-      divideOperation({
+    divide: () =>
+      operationValidator({
         history,
         setHistory,
         variableToOperate,
         setVariableToOperate,
-      });
-    },
+        WITH_VALUE,
+        operation,
+      }),
     multiply: () =>
-      multiplyOperation({
+      operationValidator({
         history,
         setHistory,
         variableToOperate,
         setVariableToOperate,
+        WITH_VALUE,
+        operation,
       }),
     delete: () =>
       setVariableToOperate(
@@ -215,5 +238,4 @@ const operationEvaluator = ({
   };
   return DICTIONARY[operation]();
 };
-
 module.exports = operationEvaluator;

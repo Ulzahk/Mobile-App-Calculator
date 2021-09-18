@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
 import GeneralButton from './components/GeneralButton';
 import operationEvaluator from './utils/calculatorFunctions';
 import normalize from './utils/normalize';
@@ -42,7 +42,10 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.outputContainer}>
         <View style={styles.outputScreen}>
-          <View style={styles.screenHistory}>
+          <ScrollView
+            style={styles.screenHistory}
+            horizontal={true}
+            contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
             {history.length > 0
               ? history.map((record, index) => {
                   if (record === '') {
@@ -55,7 +58,7 @@ const App = () => {
                   );
                 })
               : null}
-          </View>
+          </ScrollView>
           <View style={styles.screenInput}>
             <Text style={styles.screenInputText}>{variableToOperate}</Text>
           </View>
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
   outputContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#CCCCCC',
+    backgroundColor: colors.generalBackgroundColor,
     height: '20%',
     width: '100%',
     padding: normalize(12),
@@ -111,16 +114,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightBlue,
     borderRadius: normalize(10),
   },
-  screenHistory: {
+  scrollScreenHistory: {
     height: '20%',
+    width: '100%',
+  },
+  screenHistory: {
+    height: '100%',
     width: '100%',
     backgroundColor: colors.lowOpacity,
     borderTopLeftRadius: normalize(10),
     borderTopRightRadius: normalize(10),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'flex-start',
+    // alignItems: 'center',
   },
   screenHistoryText: {
     width: 'auto',
@@ -166,7 +173,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: colors.grayButtonsContainer,
+    backgroundColor: colors.generalBackgroundColor,
     height: '80%',
     width: '100%',
     padding: normalize(6),
