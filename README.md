@@ -12,6 +12,8 @@
   <p align="center">
     Mobile Calculator is a mobile application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
   </p>
+
+   <img alt="Mobile Calculator Icon" src="./Mobile-Calculator-On-Screen.png" style="width:25rem;">
 </div>
 
 ## Table of Contents
