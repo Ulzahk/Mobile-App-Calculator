@@ -1,6 +1,6 @@
 <div align="center">
     <img alt="Mobile Calculator Icon" src="./android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="100">
-  <p style="font-size:32px;">Mobile Calculator</p>
+  <h1>Mobile Calculator</h1>
 </div>
 
 <div align="center">
@@ -9,15 +9,10 @@
 [![ReactNative](https://img.shields.io/badge/-React%20Native-gray?style=flat&logo=react)](https://reactnative.dev/)
 [![Android](https://img.shields.io/badge/-Android-gray?style=flat&logo=android)](https://www.android.com/)
 
+  <p align="center">
+    Mobile Calculator is an application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
+  </p>
 </div>
-
----
-
-<p align="center">
-  Mobile Calculator is an application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
-</p>
-
----
 
 ## Table of Contents
 
