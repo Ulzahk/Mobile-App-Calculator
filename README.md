@@ -1,6 +1,6 @@
 <div align="center">
     <img alt="Mobile Calculator Icon" src="./android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="100">
-  <h2>Mobile Calculator</h2>
+  <p style="font-size:32px;">Mobile Calculator</p>
 </div>
 
 <div align="center">
