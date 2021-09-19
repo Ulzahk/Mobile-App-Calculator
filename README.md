@@ -10,7 +10,7 @@
 [![Android](https://img.shields.io/badge/-Android-gray?style=flat&logo=android)](https://www.android.com/)
 
   <p align="center">
-    Mobile Calculator is an application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
+    Mobile Calculator is a mobile application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
   </p>
 </div>
 
