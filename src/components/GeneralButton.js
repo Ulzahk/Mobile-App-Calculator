@@ -52,17 +52,18 @@ const styles = new StyleSheet.create({
     borderRadius: normalize(10),
   },
   buttonFace: {
-    height: normalize(80),
-    width: normalize(80),
-    borderRadius: normalize(10),
+    height: normalize(70),
+    width: normalize(70),
+    borderRadius: normalize(50),
     padding: normalize(12),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 5,
   },
   buttonText: {
     fontWeight: 'bold',
-    fontSize: normalize(32),
+    fontSize: normalize(28),
   },
 });
 
