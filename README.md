@@ -1,11 +1,11 @@
 <div align="center">
-    <img alt="Mobile Calculator Icon" src="./android/app/src/main/res/mipmap-hdpi/ic_launcher.png" width="100">
+    <img alt="Mobile Calculator Icon" src="./android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="100">
   <p style="font-size:2.5rem">Mobile Calculator</p>
 </div>
 
 <div align="center">
 
-[![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat&logo=javascript)](https://www.javascript.com/)
+[![JavaScript](https://img.shields.io/badge/-JavaScript-gray?style=flat&logo=javascript)](https://www.javascript.com/)
 [![ReactNative](https://img.shields.io/badge/-React%20Native-gray?style=flat&logo=react)](https://reactnative.dev/)
 [![Android](https://img.shields.io/badge/-Android-gray?style=flat&logo=android)](https://www.android.com/)
 
@@ -34,4 +34,4 @@
 
 ## License
 
-[MIT License](https://github.com/Ulzahk/Backend-Blog/blob/main/LICENSE)
+[MIT License](https://github.com/Ulzahk/Mobile-App-Calculator/blob/dev/LICENSE)
