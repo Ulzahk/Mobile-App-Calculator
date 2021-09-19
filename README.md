@@ -1,6 +1,6 @@
 <div align="center">
     <img alt="Mobile Calculator Icon" src="./android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="100">
-  <p style="font-size:2.5rem">Mobile Calculator</p>
+  <h2>Mobile Calculator</h2>
 </div>
 
 <div align="center">
@@ -13,7 +13,9 @@
 
 ---
 
-<p align="center">Mobile Calculator is an application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.</p>
+<p align="center">
+  Mobile Calculator is an application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
+</p>
 
 ---
 
