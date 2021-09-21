@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-ignore
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
 import GeneralButton from './components/GeneralButton';
 import operationEvaluator from './utils/calculatorFunctions';

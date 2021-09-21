@@ -1,4 +1,18 @@
-export const colors: Object = {
+type colors = {
+  white: string;
+  lightBlue: string;
+  lowOpacity: string;
+  screenText: string;
+  generalBackgroundColor: string;
+  grayButtonsContainer: string;
+  grayButtons: string;
+  buttonOutterShadow: string;
+  buttonInnerShadow: string;
+  buttonGradientColorOne: string;
+  buttonGradientColorTwo: string;
+}
+
+export const colors: colors = {
   white: '#ffffff',
   lightBlue: '#95bad9',
   lowOpacity: '#0000000F',
