@@ -1,4 +1,10 @@
-const RowOne = [
+interface Rowkeys {
+  keyText: string,
+  keyOperation: string,
+  keyValue?: string,
+};
+
+const RowOne: Array<Rowkeys> = [
   {
     keyText: 'C',
     keyOperation: 'cancel',
@@ -16,7 +22,7 @@ const RowOne = [
     keyOperation: 'delete',
   },
 ];
-const RowTwo = [
+const RowTwo: Array<Rowkeys> = [
   {
     keyText: '7',
     keyOperation: 'addNumber',
@@ -37,7 +43,7 @@ const RowTwo = [
     keyOperation: 'divide',
   },
 ];
-const RowThree = [
+const RowThree: Array<Rowkeys> = [
   {
     keyText: '4',
     keyOperation: 'addNumber',
@@ -58,7 +64,7 @@ const RowThree = [
     keyOperation: 'multiply',
   },
 ];
-const RowFour = [
+const RowFour: Array<Rowkeys> = [
   {
     keyText: '1',
     keyOperation: 'addNumber',
@@ -79,7 +85,7 @@ const RowFour = [
     keyOperation: 'subtract',
   },
 ];
-const RowFive = [
+const RowFive: Array<Rowkeys> = [
   {
     keyText: '0',
     keyOperation: 'addNumber',
@@ -99,5 +105,5 @@ const RowFive = [
     keyOperation: 'add',
   },
 ];
-const Keys = [RowOne, RowTwo, RowThree, RowFour, RowFive];
-module.exports = Keys;
+const Keys: Array<Array<any>> = [RowOne, RowTwo, RowThree, RowFour, RowFive];
+export default Keys
