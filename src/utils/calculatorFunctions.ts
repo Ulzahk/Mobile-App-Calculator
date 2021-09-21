@@ -1,18 +1,31 @@
-const operationValidator = ({
-  history,
-  setHistory,
-  variableToOperate,
-  setVariableToOperate,
-  WITH_VALUE,
-  operation,
-}) => {
-  const DICTIONARY = {
+const operationValidator = (params: {
+  history: Array<string>,
+  setHistory: Function,
+  variableToOperate: string,
+  setVariableToOperate: Function,
+  WITH_VALUE: boolean,
+  operation: string,
+}): void =>  {
+  const {
+    history,
+    setHistory,
+    variableToOperate,
+    setVariableToOperate,
+    WITH_VALUE,
+    operation
+  } = params;
+  const DICTIONARY: {
+    add: string,
+    subtract: string,
+    divide:string,
+    multiply: string
+  } = {
     add: '+',
     subtract: '-',
     divide: '÷',
     multiply: '×',
   };
-  const operationSign = DICTIONARY[operation];
+  const operationSign: string = DICTIONARY[operation];
   if (history.length > 0) {
     if (new RegExp(/[+\-÷×]/).test(history[history.length - 1]) === false) {
       setHistory([...history, variableToOperate, operationSign]);
@@ -238,4 +251,4 @@ const operationEvaluator = ({
   };
   return DICTIONARY[operation]();
 };
-module.exports = operationEvaluator;
+export default operationEvaluator;

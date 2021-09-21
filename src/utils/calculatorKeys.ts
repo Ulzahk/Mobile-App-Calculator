@@ -1,7 +1,7 @@
 interface Rowkeys {
-  keyText: string,
-  keyOperation: string,
-  keyValue?: string,
+  keyText: string;
+  keyOperation: string;
+  keyValue?: string;
 };
 
 const RowOne: Array<Rowkeys> = [
@@ -105,5 +105,5 @@ const RowFive: Array<Rowkeys> = [
     keyOperation: 'add',
   },
 ];
-const Keys: Array<Array<any>> = [RowOne, RowTwo, RowThree, RowFour, RowFive];
+const Keys: Array<Array<Rowkeys>> = [RowOne, RowTwo, RowThree, RowFour, RowFive];
 export default Keys

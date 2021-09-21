@@ -5,7 +5,7 @@
 
 <div align="center">
 
-[![JavaScript](https://img.shields.io/badge/-JavaScript-gray?style=flat&logo=javascript)](https://www.javascript.com/)
+[![TypeScript](https://img.shields.io/badge/-TypeScript-gray?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![ReactNative](https://img.shields.io/badge/-React%20Native-gray?style=flat&logo=react)](https://reactnative.dev/)
 [![Android](https://img.shields.io/badge/-Android-gray?style=flat&logo=android)](https://www.android.com/)
 
