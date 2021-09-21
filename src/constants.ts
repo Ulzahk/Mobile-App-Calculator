@@ -1,4 +1,4 @@
-const colors = {
+export const colors: Object = {
   white: '#ffffff',
   lightBlue: '#95bad9',
   lowOpacity: '#0000000F',
@@ -10,8 +10,4 @@ const colors = {
   buttonInnerShadow: '#ffffff',
   buttonGradientColorOne: '#cacaca',
   buttonGradientColorTwo: '#f0f0f0',
-};
-
-module.exports = {
-  colors,
 };
