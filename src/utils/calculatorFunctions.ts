@@ -46,14 +46,22 @@ const operationValidator = (params: {
     }
   }
 };
-const addNumberToVariable = ({
-  variableToOperate,
-  setVariableToOperate,
-  newValue,
-  history,
-  setHistory,
-  setResult,
+const addNumberToVariable = (params: {
+  variableToOperate: string,
+  setVariableToOperate: Function,
+  newValue: string,
+  history: Array<string>,
+  setHistory: Function,
+  setResult: Function,
 }) => {
+  const {
+    variableToOperate,
+    setVariableToOperate,
+    newValue,
+    history,
+    setHistory,
+    setResult,
+  } = params;
   if (!variableToOperate) {
     setVariableToOperate(`${newValue}`);
     if (new RegExp(/[0-9]+/).test(history[history.length - 1])) {
