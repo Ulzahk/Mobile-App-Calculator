@@ -1,10 +1,10 @@
 const operationValidator = (params: {
-  history: Array<string>,
-  setHistory: Function,
-  variableToOperate: string,
-  setVariableToOperate: Function,
-  WITH_VALUE: boolean,
-  operation: string,
+  history: Array<string>;
+  setHistory: Function;
+  variableToOperate: string;
+  setVariableToOperate: Function;
+  WITH_VALUE: boolean;
+  operation: string;
 }): void =>  {
   const {
     history,
@@ -15,10 +15,10 @@ const operationValidator = (params: {
     operation
   } = params;
   const DICTIONARY: {
-    add: string,
-    subtract: string,
-    divide:string,
-    multiply: string
+    add: string;
+    subtract: string;
+    divide:string;
+    multiply: string;
   } = {
     add: '+',
     subtract: '-',
@@ -47,12 +47,12 @@ const operationValidator = (params: {
   }
 };
 const addNumberToVariable = (params: {
-  variableToOperate: string,
-  setVariableToOperate: Function,
-  newValue: string,
-  history: Array<string>,
-  setHistory: Function,
-  setResult: Function,
+  variableToOperate: string;
+  setVariableToOperate: Function;
+  newValue: string;
+  history: Array<string>;
+  setHistory: Function;
+  setResult: Function;
 }): void => {
   const {
     variableToOperate,
@@ -74,8 +74,8 @@ const addNumberToVariable = (params: {
   }
 };
 const changeSignOperation = (params: {
-  variableToOperate: string,
-  setVariableToOperate: Function,
+  variableToOperate: string;
+  setVariableToOperate: Function;
 }): void => {
   const {variableToOperate, setVariableToOperate} = params;
   if (variableToOperate === '') {
@@ -98,11 +98,11 @@ const changeSignOperation = (params: {
   }
 };
 const percentageOperation = (params: {
-  history: Array<string>,
-  variableToOperate: string,
-  setVariableToOperate: Function,
-  equalOperation: Function,
-  setResult: Function,
+  history: Array<string>;
+  variableToOperate: string;
+  setVariableToOperate: Function;
+  equalOperation: Function;
+  setResult: Function;
 }): void => {
   const {
     history,
@@ -124,9 +124,9 @@ const percentageOperation = (params: {
   });
 };
 const cancelOperation = (params: {
-  setResult: Function,
-  setVariableToOperate: Function,
-  setHistory: Function
+  setResult: Function;
+  setVariableToOperate: Function;
+  setHistory: Function;
 }): void => {
   const {
     setResult, setVariableToOperate, setHistory
@@ -136,10 +136,10 @@ const cancelOperation = (params: {
   setHistory([]);
 };
 const equalOperation = (params: {
-  history: Array<string>,
-  variableToOperate: string,
-  setResult: Function,
-  setVariableToOperate: Function,
+  history: Array<string>;
+  variableToOperate: string;
+  setResult: Function;
+  setVariableToOperate: Function;
 }): void => {
   const {
     history,
@@ -195,13 +195,13 @@ const equalOperation = (params: {
   setVariableToOperate('');
 };
 const operationEvaluator = (params: {
-  history: string[],
-  setHistory: Function,
-  setResult:Function,
-  variableToOperate: string,
-  setVariableToOperate: Function,
-  operation: string,
-  newValue: string,
+  history: string[];
+  setHistory: Function;
+  setResult: Function;
+  variableToOperate: string;
+  setVariableToOperate: Function;
+  operation: string;
+  newValue: string;
 }) => {
   const {
     history,

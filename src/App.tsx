@@ -28,9 +28,9 @@ const handlePressButton = ({
 };
 
 const App = () => {
-  const [history, setHistory] = useState([]);
-  const [result, setResult] = useState(0);
-  const [variableToOperate, setVariableToOperate] = useState('');
+  const [history, setHistory]: [Array<string>, Function] = useState([]);
+  const [result, setResult]: [number, Function] = useState(0);
+  const [variableToOperate, setVariableToOperate]: [string, Function] = useState('');
   const defaultObject = {
     history,
     setHistory,
@@ -48,7 +48,7 @@ const App = () => {
             horizontal={true}
             contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
             {history.length > 0
-              ? history.map((record, index) => {
+              ? history.map((record: string, index: number) => {
                   if (record === '') {
                     return;
                   }
@@ -69,10 +69,10 @@ const App = () => {
         </View>
       </View>
       <View style={styles.buttonsContainer}>
-        {Keys.map((keysRow, index) => {
+        {Keys.map((keysRow, index: number) => {
           return (
             <View key={`KeysRow-${index}`} style={styles.buttonsRow}>
-              {keysRow.map((record, index) => (
+              {keysRow.map((record, index: number) => (
                 <GeneralButton
                   key={`${index}-${record.keyText}`}
                   buttonText={record.keyText}
