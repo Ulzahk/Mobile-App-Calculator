@@ -6,15 +6,19 @@ import { colors } from '../constants';
 
 const { buttonGradientColorOne, buttonGradientColorTwo, grayButtonsContainer } =
   colors;
-const GeneralButton = props => {
-  const [isDown, setDown] = useState(false);
-  const handlePressIn = useCallback(() => {
+const GeneralButton = (props: {
+  key: string;
+  buttonText: string;
+  onPress: Function;
+}) => {
+  const [isDown, setDown]: [boolean, Function] = useState(false);
+  const handlePressIn: Function = useCallback(() => {
     setDown(true);
   }, [setDown]);
-  const handlePressOut = useCallback(() => {
+  const handlePressOut: Function = useCallback(() => {
     setDown(false);
   }, [setDown]);
-  const gradColors = isDown
+  const gradColors: string[] = isDown
     ? [buttonGradientColorOne, buttonGradientColorTwo]
     : [buttonGradientColorTwo, buttonGradientColorOne];
   const { buttonText, onPress } = props;

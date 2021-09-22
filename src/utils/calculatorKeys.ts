@@ -36,7 +36,7 @@ const RowTwo: Array<Rowkeys> = [
   {
     keyText: '9',
     keyOperation: 'addNumber',
-    keyValue: '7',
+    keyValue: '9',
   },
   {
     keyText: '÷',
