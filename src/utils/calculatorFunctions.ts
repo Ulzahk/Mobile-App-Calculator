@@ -53,7 +53,7 @@ const addNumberToVariable = (params: {
   history: Array<string>,
   setHistory: Function,
   setResult: Function,
-}) => {
+}): void => {
   const {
     variableToOperate,
     setVariableToOperate,
@@ -73,7 +73,11 @@ const addNumberToVariable = (params: {
     setVariableToOperate(`${variableToOperate}${newValue}`);
   }
 };
-const changeSignOperation = ({ variableToOperate, setVariableToOperate }) => {
+const changeSignOperation = (params: {
+  variableToOperate: string,
+  setVariableToOperate: Function,
+}): void => {
+  const {variableToOperate, setVariableToOperate} = params;
   if (variableToOperate === '') {
     return;
   }
@@ -93,17 +97,24 @@ const changeSignOperation = ({ variableToOperate, setVariableToOperate }) => {
     setVariableToOperate(`${sign}${variableToOperate}`);
   }
 };
-const percentageOperation = ({
-  history,
-  variableToOperate,
-  setVariableToOperate,
-  equalOperation,
-  setResult,
-}) => {
+const percentageOperation = (params: {
+  history: Array<string>,
+  variableToOperate: string,
+  setVariableToOperate: Function,
+  equalOperation: Function,
+  setResult: Function,
+}): void => {
+  const {
+    history,
+    variableToOperate,
+    setVariableToOperate,
+    equalOperation,
+    setResult,
+  } = params;
   if (variableToOperate === '') {
     return;
   }
-  const defaultPercentage = (parseFloat(variableToOperate) * 0.01).toFixed(2);
+  const defaultPercentage: string = (parseFloat(variableToOperate) * 0.01).toFixed(2);
   setVariableToOperate(defaultPercentage);
   equalOperation({
     history,
@@ -112,22 +123,35 @@ const percentageOperation = ({
     setVariableToOperate,
   });
 };
-const cancelOperation = ({ setResult, setVariableToOperate, setHistory }) => {
+const cancelOperation = (params: {
+  setResult: Function,
+  setVariableToOperate: Function,
+  setHistory: Function
+}): void => {
+  const {
+    setResult, setVariableToOperate, setHistory
+  } = params;
   setResult(0);
   setVariableToOperate('');
   setHistory([]);
 };
-const equalOperation = ({
-  history,
-  variableToOperate,
-  setResult,
-  setVariableToOperate,
-}) => {
-  let controlVariable = 0;
+const equalOperation = (params: {
+  history: Array<string>,
+  variableToOperate: string,
+  setResult: Function,
+  setVariableToOperate: Function,
+}): void => {
+  const {
+    history,
+    variableToOperate,
+    setResult,
+    setVariableToOperate,
+  } = params;
+  let controlVariable: number = 0;
   if (variableToOperate !== '') {
     history.push(variableToOperate);
   }
-  history.map((record, index) => {
+  history.map((record: string, index: number) => {
     const previousValue = history[index - 1];
     const nextValue = history[index + 1];
     if (nextValue === undefined) {
@@ -170,17 +194,26 @@ const equalOperation = ({
   setResult(controlVariable);
   setVariableToOperate('');
 };
-const operationEvaluator = ({
-  history,
-  setHistory,
-  setResult,
-  variableToOperate,
-  setVariableToOperate,
-  operation,
-  newValue,
+const operationEvaluator = (params: {
+  history: string[],
+  setHistory: Function,
+  setResult:Function,
+  variableToOperate: string,
+  setVariableToOperate: Function,
+  operation: string,
+  newValue: string,
 }) => {
-  const WITH_VALUE = variableToOperate !== '' && variableToOperate !== '.';
-  const DICTIONARY = {
+  const {
+    history,
+    setHistory,
+    setResult,
+    variableToOperate,
+    setVariableToOperate,
+    operation,
+    newValue,
+  } = params;
+  const WITH_VALUE: boolean = variableToOperate !== '' && variableToOperate !== '.';
+  const DICTIONARY: object = {
     addNumber: () =>
       addNumberToVariable({
         variableToOperate,
