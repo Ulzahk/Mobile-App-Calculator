@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // @ts-ignore
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 import GeneralButton from './components/GeneralButton';
 import operationEvaluator from './utils/calculatorFunctions';
 import normalize from './utils/normalize';
@@ -39,6 +40,9 @@ const App = () => {
     variableToOperate,
     setVariableToOperate,
   };
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.outputContainer}>
