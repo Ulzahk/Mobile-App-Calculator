@@ -5,13 +5,17 @@
 
 <div align="center">
 
-[![TypeScript](https://img.shields.io/badge/-TypeScript-gray?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-[![ReactNative](https://img.shields.io/badge/-React%20Native-gray?style=flat&logo=react)](https://reactnative.dev/)
-[![Android](https://img.shields.io/badge/-Android-gray?style=flat&logo=android)](https://www.android.com/)
+[![TypeScript](https://img.shields.io/badge/-TypeScript-f2f2f2?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![ReactNative](https://img.shields.io/badge/-React%20Native-f2f2f2?style=for-the-badge&logo=react&logoColor=blue)](https://reactnative.dev/)
+[![Android](https://img.shields.io/badge/-Android-f2f2f2?style=for-the-badge&logo=android)](https://www.android.com/)
 
   <p align="center">
     Mobile Calculator is a mobile application that allows you to perform basic arithmetic operations, keep a history for each operation with the initial value and also obtain percentages.
   </p>
+
+  <h2>Demo</h2>
+
+[![.APK](https://img.shields.io/badge/-.APK-f2f2f2?style=for-the-badge&logo=android)](https://drive.google.com/file/d/1bgjxnW6HHevDfbHUcrbRyOnV2MUG7jz-/view?usp=sharing)
 
    <img alt="Mobile Calculator Icon" src="./Mobile-Calculator-On-Screen.png" style="width:25rem;">
 </div>
